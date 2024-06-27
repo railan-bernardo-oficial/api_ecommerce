@@ -28,6 +28,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
 
+
         $validate =  Validator::make($request->all(), [
             "name" => "required",
             'email' => 'required|email|unique:users,email',
@@ -37,15 +38,7 @@ class UserController extends Controller
             'date_birth' => 'required',
             'password' => 'required',
         ], [
-            "required" => [
-                'name' => 'Nome é obrigatório!',
-                'email' => 'E-mail é obrigatório!',
-                'phone' => 'Telefone é obrigatório!',
-                'gender' => 'Gênero é obrigatório!',
-                'document' => 'CPF é obrigatório!',
-                'date_birth' => 'Data de aniversário é obrigatório!',
-                'password' => 'Senha é obrigatório!',
-            ],
+            "required" => ' :attribute é obrigatório!',
             "unique" => 'O :attribute já está em uso. Por favor, escolha outro.',
             "email" => 'O :attribute precisa ser um endereço de e-mail válido.',
             "min" =>  'O :attribute precisa ter no mínimo :min caracteres.',
@@ -67,7 +60,7 @@ class UserController extends Controller
 
         if (!$user->save()) return response()->json(['error' => 'Erro ao criar conta, tente mais tarde!'], 400);
 
-        return response()->json(['succes', 'Conta criada com sucesso!'], 201);
+        return response()->json(['succes' => 'Conta criada com sucesso!'], 201);
     }
 
     // Atualiza usuário
